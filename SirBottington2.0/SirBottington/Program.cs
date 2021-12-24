@@ -1,32 +1,47 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 
-public class Program
+namespace SirBottington
 {
-    private DiscordSocketClient _client;
-
-    public static Task Main(string[] args) => new Program().MainAsync();
-
-	public async Task MainAsync()
-	{
-        _client = new DiscordSocketClient();
-
-        _client.Log += Log;
-
-        //  You can assign your bot token to a string, and pass that in to connect.
-        //  This is, however, insecure, particularly if you plan to have your code hosted in a public repository.
-        var token = ConfigurationManager.AppSettings["token"];
-
-        await _client.LoginAsync(TokenType.Bot, token);
-        await _client.StartAsync();
-
-        // Block this task until the program is closed.
-        await Task.Delay(-1);
-    }
-    private Task Log(LogMessage msg)
+    public class Program
     {
-        Console.WriteLine(msg.ToString());
-        return Task.CompletedTask;
+        private DiscordSocketClient _client;
+
+        public static async Task Main(string[] args)
+        {
+            var host = DI.CreateHostBuilder(args).Build();
+
+            using (host)
+            {
+               await host.RunAsync();
+            }
+
+        }
+
+        
+        public Program(DiscordSocketClient client)
+        {
+            _client = client;
+        }
+
+        public async Task RegisterCommands()
+        {
+            _client.Ready += HandleReady;
+        }
+        private async Task HandleReady()
+        {
+            await _client.SetGameAsync("+help for help commands");
+        }
+
+        
+
+        private Task Log(LogMessage msg)
+        {
+            Console.WriteLine(msg.ToString());
+            return Task.CompletedTask;
+        }
     }
 }
