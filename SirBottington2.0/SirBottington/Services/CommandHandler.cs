@@ -50,7 +50,6 @@ namespace SirBottington.Services
         private async Task HandleReady()
         {
             await _client.SetGameAsync("+help for help commands");
-
         }
     }
 }

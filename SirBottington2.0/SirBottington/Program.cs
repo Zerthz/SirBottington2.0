@@ -8,8 +8,6 @@ namespace SirBottington
 {
     public class Program
     {
-        private DiscordSocketClient _client;
-
         public static async Task Main(string[] args)
         {
             var host = DI.CreateHostBuilder(args).Build();
@@ -19,29 +17,6 @@ namespace SirBottington
                await host.RunAsync();
             }
 
-        }
-
-        
-        public Program(DiscordSocketClient client)
-        {
-            _client = client;
-        }
-
-        public async Task RegisterCommands()
-        {
-            _client.Ready += HandleReady;
-        }
-        private async Task HandleReady()
-        {
-            await _client.SetGameAsync("+help for help commands");
-        }
-
-        
-
-        private Task Log(LogMessage msg)
-        {
-            Console.WriteLine(msg.ToString());
-            return Task.CompletedTask;
         }
     }
 }
