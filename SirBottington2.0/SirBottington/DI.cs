@@ -12,6 +12,7 @@ using Discord.Addons.Hosting;
 using Discord;
 using Discord.Commands;
 using SirBottington.Services;
+using SirBottington.Modules;
 
 namespace SirBottington
 {

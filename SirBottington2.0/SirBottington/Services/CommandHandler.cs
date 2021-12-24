@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+using SirBottington.Modules;
 
 namespace SirBottington.Services
 {
@@ -19,7 +20,8 @@ namespace SirBottington.Services
         private readonly CommandService _service;
         private readonly IConfiguration _configuration;
 
-        public CommandHandler(DiscordSocketClient client, ILogger<CommandHandler> logger, IServiceProvider provider, CommandService service, IConfiguration configuration) : base(client, logger)
+        public CommandHandler(DiscordSocketClient client, ILogger<CommandHandler> logger,
+            IServiceProvider provider, CommandService service, IConfiguration configuration) : base(client, logger)
         {
             _client = client;
             _service = service;
@@ -40,10 +42,18 @@ namespace SirBottington.Services
         {
             if (socketMessage is not SocketUserMessage message) return;
 
-            var argPos = 0;
-            if (!message.HasStringPrefix(_configuration["Prefix"], ref argPos)) return;
+            
 
             var context = new SocketCommandContext(_client, message);
+
+            if (message.Content.Contains("grond"))
+            {
+                await context.Channel.SendMessageAsync("GROND!");
+                await context.Channel.SendMessageAsync("https://tenor.com/bFe3n.gif");
+            }
+
+            var argPos = 0;
+            if (!message.HasStringPrefix(_configuration["Prefix"], ref argPos)) return;
             await _service.ExecuteAsync(context, argPos, _provider);
         }
 
