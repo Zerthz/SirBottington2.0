@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using SirBottington.Modules;
+using System.Text.Json;
 
 namespace SirBottington.Services
 {
@@ -34,7 +35,7 @@ namespace SirBottington.Services
         {
             _client.Ready += HandleReady;
             _client.MessageReceived += HandleCommand;
-
+            
             await _service.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
         }
 

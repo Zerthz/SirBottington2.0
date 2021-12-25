@@ -13,6 +13,9 @@ using Discord;
 using Discord.Commands;
 using SirBottington.Services;
 using SirBottington.Modules;
+using SirBottington.Models;
+using SirBottington.Utilities;
+using SirBottington.Services.API;
 
 namespace SirBottington
 {
@@ -34,6 +37,7 @@ namespace SirBottington
             {
                 logging.AddConsole();
                 logging.SetMinimumLevel(LogLevel.Debug);
+                
             })
             .ConfigureDiscordHost((context, config) =>
             {
@@ -49,6 +53,11 @@ namespace SirBottington
             {
                 services.AddSingleton<DiscordSocketClient>();
                 services.AddTransient<Program>();
+                services.AddTransient<XKCDModel>();
+                services.AddTransient<XKCDUtil>();
+                services.AddTransient<GetXKCDAPI>();
+                services.AddTransient<EmbedBuilder>();
+                services.AddSingleton<Random>();
             })
             .UseCommandService((context, config) =>
             {
@@ -58,7 +67,10 @@ namespace SirBottington
             })
             .ConfigureServices((context, services) =>
             {
-                services.AddHostedService<CommandHandler>();
+                services
+                    .AddHostedService<CommandHandler>()
+                    .AddHttpClient();
+
             })
             .UseConsoleLifetime();
 
