@@ -16,6 +16,7 @@ using SirBottington.Modules;
 using SirBottington.Models;
 using SirBottington.Utilities;
 using SirBottington.Services.API;
+using SirBottington.Services.DataAccess;
 
 namespace SirBottington
 {
@@ -58,6 +59,8 @@ namespace SirBottington
                 services.AddTransient<GetXKCDAPI>();
                 services.AddTransient<EmbedBuilder>();
                 services.AddSingleton<Random>();
+                services.AddSingleton<ConnectToMongo>();
+                services.AddSingleton<XKCDDataAccess>();
             })
             .UseCommandService((context, config) =>
             {
