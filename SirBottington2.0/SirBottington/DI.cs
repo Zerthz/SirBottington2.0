@@ -17,6 +17,8 @@ using SirBottington.Models;
 using SirBottington.Utilities;
 using SirBottington.Services.API;
 using SirBottington.Services.DataAccess;
+using SirBottingtonPokemon.API;
+using SirBottingtonPokemon;
 
 namespace SirBottington
 {
@@ -61,6 +63,7 @@ namespace SirBottington
                 services.AddSingleton<Random>();
                 services.AddSingleton<ConnectToMongo>();
                 services.AddSingleton<XKCDDataAccess>();
+                services.AddSingleton<GetPokemon>();
             })
             .UseCommandService((context, config) =>
             {
