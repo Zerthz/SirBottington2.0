@@ -47,7 +47,7 @@ namespace SirBottington.Services
 
             var context = new SocketCommandContext(_client, message);
 
-            if (message.Content.Contains("grond"))
+            if (message.Content.Contains("grond", StringComparison.OrdinalIgnoreCase))
             {
                 await context.Channel.SendMessageAsync("GROND!");
                 await context.Channel.SendMessageAsync("https://tenor.com/bFe3n.gif");
