@@ -1,5 +1,6 @@
 ﻿using Discord.Commands;
 using SirBottingtonPokemon.API;
+using SirBottingtonPokemon.GuessGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,14 @@ namespace SirBottington.Modules
     public class PokemonModule : ModuleBase<SocketCommandContext>
     {
         private readonly GetPokemon _poke;
+        private readonly PokemonGame _game;
 
-        public PokemonModule(GetPokemon poke)
+        public PokemonModule(GetPokemon poke, PokemonGame game)
         {
             _poke = poke;
+            _game = game;
         }
+
         [Command("pokemon")]
         public async Task PokemonAsync(string arg = null, string arg2 = null)
         {
@@ -30,7 +34,12 @@ namespace SirBottington.Modules
                 {
                     await ReplyAsync("The database contains information for Pokémon between PokeID 1 and 898");
                 }
-            }else if (arg is not null)
+            }
+            else if (String.Equals(arg, "play", StringComparison.OrdinalIgnoreCase))
+            {
+                await _game.Initialize();
+            }
+            else if (arg is not null)
             {
                var pokemonEmbed = await _poke.GetPokemonName(arg);
                 if (pokemonEmbed is not null)

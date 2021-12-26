@@ -19,6 +19,9 @@ using SirBottington.Services.API;
 using SirBottington.Services.DataAccess;
 using SirBottingtonPokemon.API;
 using SirBottingtonPokemon;
+using PokeApiNet;
+using SirBottingtonPokemon.Util;
+using SirBottingtonPokemon.GuessGame;
 
 namespace SirBottington
 {
@@ -64,6 +67,9 @@ namespace SirBottington
                 services.AddSingleton<ConnectToMongo>();
                 services.AddSingleton<XKCDDataAccess>();
                 services.AddSingleton<GetPokemon>();
+                services.AddSingleton<PokeApiClient>();
+                services.AddTransient<CreateGameImages>();
+                services.AddScoped<PokemonGame>();
             })
             .UseCommandService((context, config) =>
             {

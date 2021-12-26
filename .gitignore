@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 *.config
 /SirBottington2.0/SirBottington/appsettings.json
+/SirBottington2.0/SirBottingtonPokemon/appsettings.json

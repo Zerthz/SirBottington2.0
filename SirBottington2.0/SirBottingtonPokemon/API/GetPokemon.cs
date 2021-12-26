@@ -13,9 +13,9 @@ namespace SirBottingtonPokemon.API
     public class GetPokemon
     {
         PokeApiClient _client;
-        public GetPokemon()
+        public GetPokemon(PokeApiClient client)
         {
-            _client = new PokeApiClient();
+            _client = client;
         }
 
         public async Task<Embed> GetPokemonId(int num)
