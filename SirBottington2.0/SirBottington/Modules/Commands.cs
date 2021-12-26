@@ -30,5 +30,9 @@ namespace SirBottington.Modules
         {
             await ReplyAsync("https://tenor.com/bFe3n.gif");
         }
+        [Command("ping")]
+        public async Task Pong()
+        {
+        }
     }
 }

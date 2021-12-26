@@ -2,11 +2,6 @@
 using Discord.Commands;
 using SirBottington.Services.API;
 using SirBottington.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirBottington.Modules
 {
