@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SkiaSharp;
 
 namespace SirBottingtonPokemon.Util
@@ -18,12 +12,12 @@ namespace SirBottingtonPokemon.Util
         }
         public async Task Create(int randomPokemon)
         {
-            string colorPath = _configuration.GetSection("PokemonPaths")["DEBUG_Pokemon"];
+            string colorPath = _configuration.GetSection("PokemonPaths")["PROD_Pokemon"];
             colorPath += $"\\{randomPokemon}.png";
 
-            string templatePath = _configuration.GetSection("PokemonPaths")["DEBUG_Template"];
+            string templatePath = _configuration.GetSection("PokemonPaths")["PROD_Template"];
 
-            string blackPath = _configuration.GetSection("PokemonPaths")["DEBUG_BW"];
+            string blackPath = _configuration.GetSection("PokemonPaths")["PROD_BW"];
             blackPath += $"{randomPokemon}.png";
 
             if (File.Exists(blackPath) == false)
@@ -34,9 +28,8 @@ namespace SirBottingtonPokemon.Util
             var templateImage = SKImage.FromBitmap(SKBitmap.Decode(templatePath));
             var blackImage = SKImage.FromBitmap(SKBitmap.Decode(blackPath));
             var colorImage = SKImage.FromBitmap(SKBitmap.Decode(colorPath));
-            DrawGuessImage(randomPokemon, templateImage, blackImage, Path.Combine(_configuration.GetSection("PokemonPaths")["DEBUG_BW"], randomPokemon + "black.png"));
-            DrawGuessImage(randomPokemon, templateImage, colorImage, Path.Combine(_configuration.GetSection("PokemonPaths")["DEBUG_BW"], randomPokemon + "answer.png"));
-            
+            DrawGuessImage(randomPokemon, templateImage, blackImage, Path.Combine(_configuration.GetSection("PokemonPaths")["PROD_BW"], randomPokemon + "black.png"));
+            DrawGuessImage(randomPokemon, templateImage, colorImage, Path.Combine(_configuration.GetSection("PokemonPaths")["PROD_BW"], randomPokemon + "answer.png"));            
         }
 
         private void DrawGuessImage(int randomPokemon, SKImage templateImage, SKImage drawImage, string path)

@@ -1,27 +1,20 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.Addons.Hosting;
+using Discord.Commands;
+using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Discord.Addons.Hosting;
-using Discord;
-using Discord.Commands;
-using SirBottington.Services;
-using SirBottington.Modules;
+using PokeApiNet;
 using SirBottington.Models;
-using SirBottington.Utilities;
+using SirBottington.Services;
 using SirBottington.Services.API;
 using SirBottington.Services.DataAccess;
+using SirBottington.Utilities;
 using SirBottingtonPokemon.API;
-using SirBottingtonPokemon;
-using PokeApiNet;
-using SirBottingtonPokemon.Util;
 using SirBottingtonPokemon.GuessGame;
+using SirBottingtonPokemon.Util;
 
 namespace SirBottington
 {
@@ -42,18 +35,18 @@ namespace SirBottington
             .ConfigureLogging(logging =>
             {
                 logging.AddConsole();
-                logging.SetMinimumLevel(LogLevel.Debug);
+                logging.SetMinimumLevel(LogLevel.Information);
                 
             })
             .ConfigureDiscordHost((context, config) =>
             {
                 config.SocketConfig = new DiscordSocketConfig
                 {
-                    LogLevel = LogSeverity.Debug,
+                    LogLevel = LogSeverity.Info,
                     AlwaysDownloadUsers = true,
                     MessageCacheSize = 200,
                 };
-                config.Token = context.Configuration["Debug_Token"];
+                config.Token = context.Configuration["Prod_Token"];
             })
             .ConfigureServices(services =>
             {
@@ -61,15 +54,18 @@ namespace SirBottington
                 services.AddTransient<Program>();
                 services.AddTransient<XKCDModel>();
                 services.AddTransient<XKCDUtil>();
+                services.AddSingleton<XKCDDataAccess>();
                 services.AddTransient<GetXKCDAPI>();
                 services.AddTransient<EmbedBuilder>();
                 services.AddSingleton<Random>();
                 services.AddSingleton<ConnectToMongo>();
-                services.AddSingleton<XKCDDataAccess>();
                 services.AddSingleton<GetPokemon>();
                 services.AddSingleton<PokeApiClient>();
                 services.AddTransient<CreateGameImages>();
                 services.AddScoped<PokemonGame>();
+                services.AddTransient<PokemonModel>();
+                services.AddSingleton<PokemonDataAccess>();
+                services.AddSingleton<UserDataAccess>();
             })
             .UseCommandService((context, config) =>
             {

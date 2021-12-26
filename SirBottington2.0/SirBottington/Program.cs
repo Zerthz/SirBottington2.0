@@ -1,8 +1,4 @@
-﻿using Discord;
-using Discord.WebSocket;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
+﻿using Microsoft.Extensions.Hosting;
 
 namespace SirBottington
 {
