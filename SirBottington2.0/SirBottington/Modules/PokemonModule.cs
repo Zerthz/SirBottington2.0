@@ -14,13 +14,13 @@ namespace SirBottington.Modules
 {
     public class PokemonModule : ModuleBase<SocketCommandContext>
     {
-        private readonly GetPokemon _poke;
-        private readonly PokemonGame _game;
-        private readonly PokemonDataAccess _pkmnDA;
-        private readonly UserDataAccess _userDA;
+        private readonly IGetPokemon _poke;
+        private readonly IPokemonGame _game;
+        private readonly IPokemonDataAccess _pkmnDA;
+        private readonly IUserDataAccess _userDA;
         private readonly IConfiguration _configuration;
 
-        public PokemonModule(GetPokemon poke, PokemonGame game, PokemonDataAccess db, IConfiguration configuration, UserDataAccess userDataAccess)
+        public PokemonModule(IGetPokemon poke, IPokemonGame game, IPokemonDataAccess db, IConfiguration configuration, IUserDataAccess userDataAccess)
         {
             _poke = poke;
             _game = game;
@@ -51,13 +51,13 @@ namespace SirBottington.Modules
                     if(user is null)
                     {
                         user = new UserModel { Username = Context.User.Username ,Discriminator = Context.User.Discriminator, PokemonScore = 1 };
-                        await _userDA.InsertUser(user);
+                        await _userDA.Insert(user);
                     }
                     else
                     {
                         user.PokemonScore += 1;
                         user.Username = Context.User.Username;
-                        await _userDA.UpdateUser(user);
+                        await _userDA.Update(user);
                     }
 
                 }
@@ -95,7 +95,7 @@ namespace SirBottington.Modules
             }
             else if(String.Equals(arg, "score", StringComparison.OrdinalIgnoreCase))
             {
-                var users = await _userDA.GetAllUsers();
+                var users = await _userDA.GetAll();
                 string output = "```Pokemon Score\n";
                 foreach (var user in users)
                 {

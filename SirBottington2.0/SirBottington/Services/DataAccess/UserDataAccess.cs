@@ -8,7 +8,7 @@ using SirBottington.Models;
 
 namespace SirBottington.Services.DataAccess
 {
-    public class UserDataAccess
+    public class UserDataAccess : IUserDataAccess
     {
         private readonly ConnectToMongo _connection;
         private const string UserCollection = "users";
@@ -24,20 +24,20 @@ namespace SirBottington.Services.DataAccess
             var results = await userCollection.FindAsync(u => u.Discriminator == dV);
             return results.FirstOrDefault();
         }
-        public async Task<List<UserModel>> GetAllUsers()
+        public async Task<List<UserModel>> GetAll()
         {
             var userCollection = _connection.Connect<UserModel>(UserCollection);
             var results = await userCollection.FindAsync(_ => true);
             return results.ToList();
         }
 
-        public Task UpdateUser(UserModel user)
+        public Task Update(UserModel user)
         {
             var userCollection = _connection.Connect<UserModel>(UserCollection);
             var filter = Builders<UserModel>.Filter.Eq("Id", user.Id);
             return userCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
         }
-        public Task InsertUser(UserModel user)
+        public Task Insert(UserModel user)
         {
             var userCollection = _connection.Connect<UserModel>(UserCollection);
             return userCollection.InsertOneAsync(user);

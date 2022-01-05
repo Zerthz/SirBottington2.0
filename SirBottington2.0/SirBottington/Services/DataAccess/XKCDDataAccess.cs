@@ -3,7 +3,7 @@ using SirBottington.Models;
 
 namespace SirBottington.Services.DataAccess
 {
-    public class XKCDDataAccess
+    public class XKCDDataAccess : IXKCDDataAccess
     {
         private readonly ConnectToMongo _connection;
         private const string ComicCollection = "XKCDCollection";
@@ -12,20 +12,20 @@ namespace SirBottington.Services.DataAccess
         {
             _connection = connection;
         }
-       
-        public async Task<List<XKCDModel>> GetAllComics()
+
+        public async Task<List<XKCDModel>> GetAll()
         {
             var comicCollection = _connection.Connect<XKCDModel>(ComicCollection);
             var results = await comicCollection.FindAsync(_ => true);
-            return  results.ToList();
+            return results.ToList();
         }
-        public Task InsertComic(XKCDModel comic)
+        public Task Insert(XKCDModel comic)
         {
             var comicCollection = _connection.Connect<XKCDModel>(ComicCollection);
             return comicCollection.InsertOneAsync(comic);
         }
 
-        public Task UpdateComic(XKCDModel comic)
+        public Task Update(XKCDModel comic)
         {
             var comicCollection = _connection.Connect<XKCDModel>(ComicCollection);
             var filter = Builders<XKCDModel>.Filter.Eq("Id", comic.Id);
@@ -39,7 +39,7 @@ namespace SirBottington.Services.DataAccess
             var output = new Dictionary<string, XKCDModel>();
             foreach (XKCDSearchModel item in results.ToList())
             {
-                output.Add(item.SearchTerm, item.Comic);
+                output.Add(item.SearchTerm, item.Comic as XKCDModel);
             }
             return output;
         }

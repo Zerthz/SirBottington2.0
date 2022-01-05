@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SirBottington.Models
 {
-    public class PokemonModel
+    public class PokemonModel : IPokemonModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

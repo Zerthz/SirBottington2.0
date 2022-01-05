@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SirBottington.Models
 {
-    public class XKCDModel
+    public class XKCDModel : IXKCDModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

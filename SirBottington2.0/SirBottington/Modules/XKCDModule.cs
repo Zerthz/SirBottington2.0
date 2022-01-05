@@ -9,11 +9,11 @@ namespace SirBottington.Modules
     [Summary("Commands related to the XKCD feature branch of SirBottington")]
     public class XKCDModule : ModuleBase<SocketCommandContext>
     {
-        private readonly XKCDUtil _util;
-        private readonly GetXKCDAPI _api;
+        private readonly IXKCDUtil _util;
+        private readonly IGetXKCDAPI _api;
         private readonly Random _r;
 
-        public XKCDModule(XKCDUtil util, GetXKCDAPI api, Random r)
+        public XKCDModule(IXKCDUtil util, IGetXKCDAPI api, Random r)
         {
             _util = util;
             _api = api;

@@ -3,7 +3,7 @@ using SirBottington.Models;
 
 namespace SirBottington.Services.DataAccess
 {
-    public class PokemonDataAccess
+    public class PokemonDataAccess : IPokemonDataAccess
     {
         private readonly ConnectToMongo _connection;
         private const string CurrentGameCollection = "CurrentGuessingGame";

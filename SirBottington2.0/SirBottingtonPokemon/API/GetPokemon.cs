@@ -4,7 +4,7 @@ using SirBottingtonPokemon.Util;
 
 namespace SirBottingtonPokemon.API
 {
-    public class GetPokemon
+    public class GetPokemon : IGetPokemon
     {
         PokeApiClient _client;
         public GetPokemon(PokeApiClient client)
@@ -16,7 +16,7 @@ namespace SirBottingtonPokemon.API
         {
             Pokemon pokemon = await _client.GetResourceAsync<Pokemon>(num);
             return pokemon;
-           
+
         }
         public async Task<Pokemon> GetPokemonName(string name)
         {
@@ -24,8 +24,9 @@ namespace SirBottingtonPokemon.API
             {
                 Pokemon pokemon = await _client.GetResourceAsync<Pokemon>(name);
                 return pokemon;
-               
-            }catch 
+
+            }
+            catch
             {
                 return null;
             }

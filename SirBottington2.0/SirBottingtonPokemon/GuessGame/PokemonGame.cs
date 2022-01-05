@@ -6,13 +6,13 @@ using SirBottingtonPokemon.Util;
 
 namespace SirBottingtonPokemon.GuessGame
 {
-    public class PokemonGame : InteractiveBase
+    public class PokemonGame : InteractiveBase, IPokemonGame
     {
         Random r;
         private readonly CreateGameImages _createImages;
-        private readonly GetPokemon _getPokemon;
+        private readonly IGetPokemon _getPokemon;
 
-        public PokemonGame(Random r, PokeApiClient client, CreateGameImages createImages, GetPokemon getPokemon)
+        public PokemonGame(Random r, PokeApiClient client, CreateGameImages createImages, IGetPokemon getPokemon)
         {
             this.r = r;
             _createImages = createImages;
@@ -25,7 +25,7 @@ namespace SirBottingtonPokemon.GuessGame
             var pokemon = await _getPokemon.GetPokemonId(randomPokemon);
             return new PokemonGameModel { Name = pokemon.Name, PokedexId = pokemon.Id };
         }
-     
+
     }
 }
  

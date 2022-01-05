@@ -4,7 +4,7 @@ using SkiaSharp;
 
 namespace SirBottingtonPokemon.Util
 {
-    public class CreateGameImages
+    public class CreateGameImages : ICreateGameImages
     {
         IConfiguration _configuration;
         public CreateGameImages(IConfiguration configuration)
@@ -14,7 +14,7 @@ namespace SirBottingtonPokemon.Util
         public async Task Create(int randomPokemon)
         {
             string colorPath = _configuration.GetSection("PokemonPaths")["PROD_Pokemon"];
-            colorPath += $"\\{randomPokemon}.png";
+            colorPath += $"/{randomPokemon}.png";
 
             string templatePath = _configuration.GetSection("PokemonPaths")["PROD_Template"];
 
@@ -30,12 +30,12 @@ namespace SirBottingtonPokemon.Util
             var blackImage = SKImage.FromBitmap(SKBitmap.Decode(blackPath));
             var colorImage = SKImage.FromBitmap(SKBitmap.Decode(colorPath));
             DrawGuessImage(randomPokemon, templateImage, blackImage, Path.Combine(_configuration.GetSection("PokemonPaths")["PROD_BW"], randomPokemon + "black.png"));
-            DrawGuessImage(randomPokemon, templateImage, colorImage, Path.Combine(_configuration.GetSection("PokemonPaths")["PROD_BW"], randomPokemon + "answer.png"));            
+            DrawGuessImage(randomPokemon, templateImage, colorImage, Path.Combine(_configuration.GetSection("PokemonPaths")["PROD_BW"], randomPokemon + "answer.png"));
         }
 
         private void DrawGuessImage(int randomPokemon, SKImage templateImage, SKImage drawImage, string path)
         {
-            
+
             using (SKBitmap bmp = new SKBitmap(1152, 648))
             {
                 using (SKSurface surface = SKSurface.Create(new SKImageInfo(1152, 648)))
@@ -56,11 +56,13 @@ namespace SirBottingtonPokemon.Util
                     }
                 }
             }
-            
+
         }
 
         private void CreateBlackImage(string colorPath, string blackPath)
         {
+            Console.WriteLine(colorPath);
+            Console.WriteLine(blackPath);
             SKBitmap orginalBmp = SKBitmap.Decode(colorPath);
             SKBitmap blackBmp = new SKBitmap(orginalBmp.Width, orginalBmp.Height);
 

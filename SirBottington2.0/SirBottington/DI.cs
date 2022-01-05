@@ -51,21 +51,26 @@ namespace SirBottington
             .ConfigureServices(services =>
             {
                 services.AddSingleton<DiscordSocketClient>();
-                services.AddTransient<Program>();
-                services.AddTransient<XKCDModel>();
-                services.AddTransient<XKCDUtil>();
-                services.AddSingleton<XKCDDataAccess>();
-                services.AddTransient<GetXKCDAPI>();
-                services.AddTransient<EmbedBuilder>();
-                services.AddSingleton<Random>();
+                services.AddSingleton<IXKCDDataAccess, XKCDDataAccess>();
+                services.AddSingleton<IUserDataAccess, UserDataAccess>();
+                services.AddSingleton<IPokemonDataAccess, PokemonDataAccess>();
+                services.AddSingleton<IGetPokemon, GetPokemon>();
                 services.AddSingleton<ConnectToMongo>();
-                services.AddSingleton<GetPokemon>();
+                services.AddSingleton<Random>();
                 services.AddSingleton<PokeApiClient>();
+
+
+                services.AddTransient<Program>();
+                services.AddTransient<EmbedBuilder>();
+                services.AddTransient<IXKCDModel, XKCDModel>();
+                services.AddTransient<IXKCDUtil, XKCDUtil>();
+                services.AddTransient<IGetXKCDAPI, GetXKCDAPI>();
                 services.AddTransient<CreateGameImages>();
-                services.AddScoped<PokemonGame>();
-                services.AddTransient<PokemonModel>();
-                services.AddSingleton<PokemonDataAccess>();
-                services.AddSingleton<UserDataAccess>();
+                services.AddTransient<IPokemonModel, PokemonModel>();
+                
+                
+                services.AddScoped<IPokemonGame, PokemonGame>();
+
             })
             .UseCommandService((context, config) =>
             {
