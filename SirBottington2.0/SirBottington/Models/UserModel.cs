@@ -15,6 +15,8 @@ namespace SirBottington.Models
         public string Id { get; set; }
         public string Username { get; set; }
         public string Discriminator { get; set; }
-        public int PokemonScore { get; set; }
+        public int? PokemonScore { get; set; }
+
+
     }
 }
