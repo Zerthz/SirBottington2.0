@@ -24,15 +24,6 @@ namespace SirBottington.Modules
             await ReplyAsync(_configuration["Vibes"]);
         }
 
-        [Command("test")]
-        [Summary("test")]
-        public async Task TestAsync()
-        {
-            await ReplyAsync("https://tenor.com/bFe3n.gif");
-        }
-        [Command("ping")]
-        public async Task Pong()
-        {
-        }
+        
     }
 }
