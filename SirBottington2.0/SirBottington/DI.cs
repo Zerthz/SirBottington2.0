@@ -48,7 +48,12 @@ namespace SirBottington
                     AlwaysDownloadUsers = true,
                     MessageCacheSize = 200,
                 };
+#if DEBUG
                 config.Token = context.Configuration["Debug_Token"];
+#else
+                config.Token = context.Configuration["Prod_Token"];
+#endif
+
             })
             .ConfigureServices(services =>
             {
