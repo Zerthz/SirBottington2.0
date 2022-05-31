@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeApiNet;
+using SirBottington.Core.Interfaces;
+using SirBottington.Core.Services;
 using SirBottington.Models;
 using SirBottington.Services;
 using SirBottington.Services.API;
@@ -46,7 +48,7 @@ namespace SirBottington
                     AlwaysDownloadUsers = true,
                     MessageCacheSize = 200,
                 };
-                config.Token = context.Configuration["Prod_Token"];
+                config.Token = context.Configuration["Debug_Token"];
             })
             .ConfigureServices(services =>
             {
@@ -59,7 +61,7 @@ namespace SirBottington
                 services.AddSingleton<Random>();
                 services.AddSingleton<PokeApiClient>();
 
-
+                services.AddTransient<IEHugService, EHugService>();
                 services.AddTransient<Program>();
                 services.AddTransient<EmbedBuilder>();
                 services.AddTransient<IXKCDModel, XKCDModel>();

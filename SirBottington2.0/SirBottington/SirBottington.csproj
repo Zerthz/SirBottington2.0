@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SirBottington2.0.Core\SirBottington.Core.csproj" />
     <ProjectReference Include="..\SirBottingtonPokemon\SirBottingtonPokemon.csproj" />
   </ItemGroup>
 
