@@ -19,6 +19,9 @@ The first bot was written when I was just learning how to code in C#, it thus ha
   * Provides the latest XKCD comic strip in a custom embed for the chat.
   * You can search for a word and the bot will return the strip that it determines best fits the given word.
   * Get specific comic strips with ID or get a Random one.
+ * EHug 
+   * Sends a little pick me up message.
+   * Uses the https://www.affirmations.dev/ API
 
 ## Plans
 * Make the +help command work together with /summary/ for efficient documentation.
