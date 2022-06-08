@@ -49,9 +49,11 @@ namespace SirBottington
                     MessageCacheSize = 200,
                 };
 
-
+#if DEBUG
+                config.Token = context.Configuration["Debug_Token"];
+#else
                 config.Token = context.Configuration["Prod_Token"];
-
+#endif
 
             })
             .ConfigureServices(services =>
@@ -64,7 +66,7 @@ namespace SirBottington
                 services.AddSingleton<ConnectToMongo>();
                 services.AddSingleton<Random>();
                 services.AddSingleton<PokeApiClient>();
-
+                services.AddTransient<IMCUService, MCUService>();
                 services.AddTransient<IEHugService, EHugService>();
                 services.AddTransient<Program>();
                 services.AddTransient<EmbedBuilder>();

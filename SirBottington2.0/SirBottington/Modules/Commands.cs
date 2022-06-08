@@ -13,12 +13,15 @@ namespace SirBottington.Modules
     {
         private readonly IConfiguration _configuration;
         private readonly IEHugService _eHugService;
+        private readonly IMCUService _mcuService;
 
         public Commands(IConfiguration configuration, 
-                     IEHugService eHugService)   
+                     IEHugService eHugService,
+                     IMCUService mcuService)   
         {
             _configuration = configuration;
             _eHugService = eHugService;
+            _mcuService = mcuService;
         }
 
         [Command("vibes")]
@@ -35,6 +38,13 @@ namespace SirBottington.Modules
         {
             var affirm = await _eHugService.GetEHugAsync();
             await ReplyAsync(affirm.ToString());
+        }
+
+        [Command("MCU")]
+        [Summary("Gets the countdown to the next MCU Project.")]
+        public async Task MCUAsync()
+        {
+            await ReplyAsync(embed: await _mcuService.GetMCUCountownEmbedAsync());
         }
     }
 }
